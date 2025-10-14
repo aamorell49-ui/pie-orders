@@ -143,12 +143,27 @@ export default function App() {
         console.warn("No Apps Script URL set. Logging payload only:", payload);
         await new Promise(r => setTimeout(r, 600));
       } else {
-        await fetch(GOOGLE_APPS_SCRIPT_URL, {
-        method: "POST",
-        // Use a CORS-simple request to avoid preflight issues
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload),
-      });
+        // 1) Simple request to avoid preflight
+        let delivered = false;
+        try {
+          const resp = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload),
+          });
+          delivered = !!resp && (resp.ok || resp.type === "opaque");
+        } catch (_) {
+          delivered = false;
+        }
+        // 2) Fallback: force delivery if browser still preflights
+        if (!delivered) {
+          await fetch(GOOGLE_APPS_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload),
+          });
+        }
       }
       setSubmitted(true);
       setCart({});
