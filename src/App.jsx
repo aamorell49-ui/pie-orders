@@ -1,19 +1,15 @@
-// Pie Orders - single-file React app
+// Pie Orders - single-file React app (fixed quotes)
 // Quick start:
-// 1) Click "Open in editor", then Export > Download file as index.jsx. 
-// 2) Create a new Vite React app (or paste into any React project) and replace App.jsx with this file.
-//    npm create vite@latest pie-orders -- --template react
-//    cd pie-orders && npm i && npm run dev
-// 3) In the code below, set GOOGLE_APPS_SCRIPT_URL to your deployed Web App URL (see chat for the small script).
-// 4) Deploy to Netlify/Vercel when ready. You'll get orders in your Google Sheet.
+// 1) Replace App.jsx with this file.
+// 2) Build and deploy with Netlify or Vercel.
 
 import React, { useMemo, useState } from "react";
 
 const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx1zZKlpEXwR61m-r3BTJStFB9m--si4NvrTT-3GXlEcKEcLrCNmYm6R0lhSx54JDt6-w/exec"; // <-- live URL
 
 // Payment handles
-const VENMO_USERNAME = "Armando-Morell"; // <-- your actual Venmo username (no @ here)
-const CASHAPP_USERNAME = "$aamorell"; // <-- your actual Cash App $Cashtag
+const VENMO_USERNAME = "Armando-Morell";
+const CASHAPP_USERNAME = "$aamorell";
 
 function buildVenmoLinks(amount, note = "") {
   const amt = Number((amount || 0).toFixed(2));
@@ -29,41 +25,41 @@ function buildCashAppLink(amount, note = "") {
   return `https://cash.app/${CASHAPP_USERNAME}?amount=${amt}&note=${encNote}`;
 }
 
-// --- Catalog (edit freely) ---
+// --- Catalog (fixed quotes) ---
 const CATALOG = [
   {
-    category: "6\\" Pies (serves 3-4)",
+    category: '6" Pies (serves 3-4)',
     items: [
-      { id: "pumpkin6", name: 'Pumpkin (6\\")", price: 10 },
-      { id: "pecan6", name: 'Pecan (6\\")", price: 10 },
-      { id: "applecrumb6", name: 'Apple Crumb (6\\")", price: 10 },
-      { id: "sweetpotato6", name: 'Sweet Potato (6\\")", price: 10 },
-      { id: "bean6", name: 'Bean (6\\")", price: 10 },
+      { id: "pumpkin6", name: 'Pumpkin (6")', price: 10 },
+      { id: "pecan6", name: 'Pecan (6")', price: 10 },
+      { id: "applecrumb6", name: 'Apple Crumb (6")', price: 10 },
+      { id: "sweetpotato6", name: 'Sweet Potato (6")', price: 10 },
+      { id: "bean6", name: 'Bean (6")', price: 10 },
     ],
   },
   {
     category: "Small Pies",
     items: [
-      { id: "pumpkinS", name: 'Pumpkin (Small)", price: 5 },
-      { id: "sweetpotatoS", name: 'Sweet Potato (Small)", price: 5 },
-      { id: "pecanS", name: 'Pecan (Small)", price: 5 },
-      { id: "buttermilkS", name: 'Buttermilk Coconut (Small)", price: 5 },
-      { id: "lemoncustardS", name: 'Lemon Custard (Small)", price: 5 },
-      { id: "beanS", name: 'Bean (Small)", price: 5 },
+      { id: "pumpkinS", name: "Pumpkin (Small)", price: 5 },
+      { id: "sweetpotatoS", name: "Sweet Potato (Small)", price: 5 },
+      { id: "pecanS", name: "Pecan (Small)", price: 5 },
+      { id: "buttermilkS", name: "Buttermilk Coconut (Small)", price: 5 },
+      { id: "lemoncustardS", name: "Lemon Custard (Small)", price: 5 },
+      { id: "beanS", name: "Bean (Small)", price: 5 },
     ],
   },
   {
     category: "Cobblers · Cakes · Pudding · Cheesecake",
     items: [
-      { id: "applecobbler", name: 'Apple Cobbler", price: 5 },
-      { id: "peachcobbler", name: 'Peach Cobbler", price: 5 },
-      { id: "chocfudge", name: 'Chocolate Fudge Cake", price: 5 },
-      { id: "carrot", name: 'Carrot Cake (w/ nuts)", price: 5 },
-      { id: "redvelvet", name: 'Red Velvet Cake", price: 5 },
-      { id: "creamcheese", name: 'Cream Cheese Frosting (cup)", price: 5 },
-      { id: "cookiesCream", name: 'Cookies & Cream Cheesecake", price: 5 },
-      { id: "strawberryCC", name: 'Strawberry Cheesecake", price: 5 },
-      { id: "bananaPudding", name: 'Banana Pudding (pt)", price: 5 },
+      { id: "applecobbler", name: "Apple Cobbler", price: 5 },
+      { id: "peachcobbler", name: "Peach Cobbler", price: 5 },
+      { id: "chocfudge", name: "Chocolate Fudge Cake", price: 5 },
+      { id: "carrot", name: "Carrot Cake (w/ nuts)", price: 5 },
+      { id: "redvelvet", name: "Red Velvet Cake", price: 5 },
+      { id: "creamcheese", name: "Cream Cheese Frosting (cup)", price: 5 },
+      { id: "cookiesCream", name: "Cookies & Cream Cheesecake", price: 5 },
+      { id: "strawberryCC", name: "Strawberry Cheesecake", price: 5 },
+      { id: "bananaPudding", name: "Banana Pudding (pt)", price: 5 },
     ],
   },
 ];
@@ -142,11 +138,16 @@ export default function App() {
         createdAt: new Date().toISOString(),
       };
 
-      await fetch(GOOGLE_APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      if (!GOOGLE_APPS_SCRIPT_URL || GOOGLE_APPS_SCRIPT_URL.includes("YOUR_GOOGLE")) {
+        console.warn("No Apps Script URL set. Logging payload only:", payload);
+        await new Promise(r => setTimeout(r, 600));
+      } else {
+        await fetch(GOOGLE_APPS_SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+      }
       setSubmitted(true);
       setCart({});
     } catch (err) {
