@@ -2,6 +2,7 @@
 // Quick start:
 // 1) Replace App.jsx with this file.
 // 2) Build and deploy with Netlify or Vercel.
+// NOTE: itemsSummary & OrderItems are generated in Google Apps Script (server-side), not here.
 
 import React, { useMemo, useState } from "react";
 
