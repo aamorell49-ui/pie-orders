@@ -143,10 +143,11 @@ export default function App() {
         await new Promise(r => setTimeout(r, 600));
       } else {
         await fetch(GOOGLE_APPS_SCRIPT_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+        method: "POST",
+        // Use a CORS-simple request to avoid preflight issues
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+      });
       }
       setSubmitted(true);
       setCart({});
