@@ -6,7 +6,7 @@
 
 import React, { useMemo, useState } from "react";
 
-const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx1zZKlpEXwR61m-r3BTJStFB9m--si4NvrTT-3GXlEcKEcLrCNmYm6R0lhSx54JDt6-w/exec"; // <-- live URL
+const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFLG76_iKLSi3YDIRRI239xxd_eQQgqVUAr8N-tjfCWyAaNQIW21evbyHoKByBKboAXQ/exec"; // <-- live URL
 
 // Payment handles
 const VENMO_USERNAME = "Armando-Morell";
