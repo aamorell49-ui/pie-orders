@@ -39,7 +39,7 @@ const CATALOG = [
     ],
   },
   {
-    category: "Small Pies",
+    category: "4in Small Pies",
     items: [
       { id: "pumpkinS", name: "Pumpkin (Small)", price: 5 },
       { id: "sweetpotatoS", name: "Sweet Potato (Small)", price: 5 },
@@ -55,9 +55,8 @@ const CATALOG = [
       { id: "applecobbler", name: "Apple Cobbler", price: 5 },
       { id: "peachcobbler", name: "Peach Cobbler", price: 5 },
       { id: "chocfudge", name: "Chocolate Fudge Cake", price: 5 },
-      { id: "carrot", name: "Carrot Cake (w/ nuts)", price: 5 },
-      { id: "redvelvet", name: "Red Velvet Cake", price: 5 },
-      { id: "creamcheese", name: "Cream Cheese Frosting (cup)", price: 5 },
+      { id: "carrot", name: "Carrot Cake (w/ Cream Cheese Frosting)", price: 5 },
+      { id: "redvelvet", name: "Red Velvet Cake (w/ Cream Cheese Frosting)", price: 5 },
       { id: "cookiesCream", name: "Cookies & Cream Cheesecake", price: 5 },
       { id: "strawberryCC", name: "Strawberry Cheesecake", price: 5 },
       { id: "bananaPudding", name: "Banana Pudding (pt)", price: 5 },
