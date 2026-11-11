@@ -43,3 +43,47 @@
 /* Restore focus for assistive technology without outlining the entire poster. */
 #main:focus{outline:none}
 @media(min-width:701px),(orientation:landscape){.site-shell .stage{width:min(100%,calc((100svh - 176px)*1.776833))}}
+
+/* Persistent ground fog: an overlay only; the approved poster stays untouched.
+   Two cached turbulence textures drift in counter-motion without a hard loop cut.
+   The existing Pause motion control also pauses these layers. */
+.stage .haze {
+  inset:auto 0 0; height:36%; z-index:2; opacity:.72;
+  pointer-events:none; overflow:hidden; mix-blend-mode:screen;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.12) 22%,rgba(0,0,0,.65) 56%,#000 100%);
+  mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.12) 22%,rgba(0,0,0,.65) 56%,#000 100%);
+  transition:opacity 1.4s ease;
+}
+.stage .haze::before,.stage .haze::after {
+  content:""; position:absolute; inset:-8% -30% -35%;
+  background-repeat:no-repeat; background-size:100% 100%;
+  filter:blur(1px); transform-origin:50% 85%; will-change:transform;
+  animation:ground-fog-near 27s ease-in-out infinite alternate;
+  animation-delay:-9s; animation-play-state:paused;
+}
+.stage .haze::before { background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22360%22%20viewBox%3D%220%200%201200%20360%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22fade%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22white%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22white%22%20stop-opacity%3D%22.95%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22white%22%20stop-opacity%3D%220%22%2F%3E%3C%2FradialGradient%3E%3Cfilter%20id%3D%22fog%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20color-interpolation-filters%3D%22sRGB%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.005%200.024%22%20numOctaves%3D%224%22%20seed%3D%2217%22%20stitchTiles%3D%22stitch%22%20result%3D%22noise%22%2F%3E%3CfeColorMatrix%20in%3D%22noise%22%20type%3D%22matrix%22%20values%3D%220%200%200%200%20.60%200%200%200%200%20.70%200%200%200%200%20.86%201.9%200%200%200%20-.48%22%2F%3E%3CfeComposite%20in2%3D%22SourceGraphic%22%20operator%3D%22in%22%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3Crect%20width%3D%221200%22%20height%3D%22360%22%20fill%3D%22url%28%23fade%29%22%20filter%3D%22url%28%23fog%29%22%2F%3E%3C%2Fsvg%3E"); }
+.stage .haze::after {
+  inset:-28% -40% -15%; background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22360%22%20viewBox%3D%220%200%201200%20360%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22fade%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22white%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22white%22%20stop-opacity%3D%22.95%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22white%22%20stop-opacity%3D%220%22%2F%3E%3C%2FradialGradient%3E%3Cfilter%20id%3D%22fog%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20color-interpolation-filters%3D%22sRGB%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.008%200.017%22%20numOctaves%3D%224%22%20seed%3D%2251%22%20stitchTiles%3D%22stitch%22%20result%3D%22noise%22%2F%3E%3CfeColorMatrix%20in%3D%22noise%22%20type%3D%22matrix%22%20values%3D%220%200%200%200%20.60%200%200%200%200%20.70%200%200%200%200%20.86%201.9%200%200%200%20-.48%22%2F%3E%3CfeComposite%20in2%3D%22SourceGraphic%22%20operator%3D%22in%22%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3Crect%20width%3D%221200%22%20height%3D%22360%22%20fill%3D%22url%28%23fade%29%22%20filter%3D%22url%28%23fog%29%22%2F%3E%3C%2Fsvg%3E");
+  animation-name:ground-fog-far; animation-duration:41s; animation-delay:-19s;
+  opacity:.7;
+}
+body.motion-enabled .stage .haze::before,body.motion-enabled .stage .haze::after { animation-play-state:running; }
+.intro-pending:not(.intro-revealing) .stage .haze { opacity:0; }
+.intro-pending .stage .haze::before,.intro-pending .stage .haze::after { animation-play-state:paused!important; }
+@keyframes ground-fog-near {
+  0% { transform:translate3d(-12%,8%,0) scale(1.04,1); }
+  50% { transform:translate3d(0,-4%,0) scale(1.08,1.09); }
+  100% { transform:translate3d(12%,4%,0) scale(1.03,1.03); }
+}
+@keyframes ground-fog-far {
+  0% { transform:translate3d(13%,-2%,0) scale(1.05,1.12); }
+  50% { transform:translate3d(0,8%,0) scale(1.01,1); }
+  100% { transform:translate3d(-13%,-7%,0) scale(1.08,1.08); }
+}
+@media(max-width:700px) and (orientation:portrait) {
+  .stage .haze {height:36%;opacity:.65;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .stage .haze::before,.stage .haze::after {animation:none!important;will-change:auto;}
+}
+@media print { .stage .haze {display:none!important;} }
