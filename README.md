@@ -1,21 +1,32 @@
 # Saddle Brook MS/HS Music Program — Coming Soon
 
-This is a standalone temporary holding page on the `sbhs-coming-soon` branch. The fundraiser on `main` is unchanged. Do not merge this branch into `main`: its root intentionally contains only the coming-soon website.
+This standalone temporary holding page is stored on the `sbhs-coming-soon` branch. The fundraiser on `main` is unchanged. Do not merge this branch into `main`: its root intentionally contains only the coming-soon website.
 
-## Publish
+## Publish on GitHub Pages
 
-After `assets/coming-soon.png` has been imported, open repository Settings → Pages. Select **Deploy from a branch**, branch **sbhs-coming-soon**, folder **/(root)**, and Save. This selects only this branch for GitHub Pages; it does not change the fundraiser source on main or a Netlify deployment tracking main.
+The approved artwork is already stored in `assets/coming-soon.png`; no download/import step is needed.
 
-Default GitHub Pages address after successful publication (unless a custom domain is already configured): https://aamorell49-ui.github.io/pie-orders/
+1. Open repository Settings → Pages.
+2. Under Build and deployment, choose **Deploy from a branch**.
+3. Select branch **sbhs-coming-soon** and folder **/(root)**, then Save.
+4. Open the published address shown by GitHub and confirm that it serves the coming-soon artwork before redirecting the primary website.
 
-Do not redirect the primary website until that address visibly serves the correct page. No DNS, domain redirect, CNAME, or main-site settings are changed by these files.
+Expected default address after publication, unless a custom domain is configured: https://aamorell49-ui.github.io/pie-orders/
+
+Selecting this branch for Pages does not modify fundraiser source on `main`. No DNS, domain redirect, CNAME, Netlify settings, or main-site configuration has been changed. If GitHub Pages already serves another active site from this repository, do not replace that publishing source without checking it first.
 
 ## Contents
 
-- `index.html`: responsive static page, native mobile announcement, screen-reader text, and a subtle CSS haze overlay with a pause control and reduced-motion support.
-- `assets/coming-soon.png`: exact approved royal-blue-and-gold artwork with black marching plumes. The original poster is not cropped or regenerated.
-- `.nojekyll`: serve static files without a Jekyll build.
+- `index.html`: responsive static page with readable mobile text, screen-reader announcement, and a subtle moving haze overlay. A pause control and reduced-motion support are included.
+- `assets/coming-soon.png`: exact approved royal-blue-and-gold artwork with black marching plumes; not cropped or regenerated.
+- `.nojekyll`: serves the files without requiring a Jekyll build.
 
-The one-time import workflow copies the approved artwork into this branch and verifies its SHA-256 before storing it. The website itself uses a local asset, not an expiring Adobe link. Once imported, the workflow can be removed.
+The image is stored in this repository; the website does not depend on an expiring Adobe URL. The completed one-time import workflow has been removed.
 
-No build command, backend, account creation, analytics, external font service, signup form, countdown, or fabricated launch date is needed. If the files move to another host, update `og:image` in index.html to the new public image URL.
+## Checks
+
+The page was checked in Chromium at 1440×900, 390×844, 320×568, 844×390, and 768×1024. The checks covered image loading, horizontal overflow, JavaScript errors, pause/resume, and reduced-motion behavior. Desktop and mobile layouts were visually inspected. These were local rendering checks, not proof of a live Pages deployment.
+
+Artwork SHA-256: `2dd5eaa4dc5ad63dc5688f8f3fa3ccc47fcab3b1b0efad36d658ebf6ee845958`.
+
+No build command, backend, login, tracking, external font service, signup form, countdown, or launch date is required. If these files move to another host, update the `og:image` address in index.html to the new public image URL.
