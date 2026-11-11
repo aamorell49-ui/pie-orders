@@ -1,29 +1,104 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- HTML Meta Tags -->
-<title>Fall Pie Sale 🍰</title>
-<meta name="description" content="Order delicious pies and support Saddle Brook MS/HS Music Association!">
-
-<!-- Facebook Meta Tags -->
-<meta property="og:url" content="https://pie-orders.vercel.app/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Fall Pie Sale 🍰">
-<meta property="og:description" content="Order delicious pies and support Saddle Brook MS/HS Music Association!">
-<meta property="og:image" content="https://opengraph.b-cdn.net/production/images/02d47ed4-326f-4cc9-9593-e0350d72d624.jpg?token=dBGWt2mlmItW_R3uYHx_IhfnDRKIpkmPBKoLm5f5ANk&height=675&width=1200&expires=33296498906">
-
-<!-- Twitter Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:domain" content="pie-orders.vercel.app">
-<meta property="twitter:url" content="https://pie-orders.vercel.app/">
-<meta name="twitter:title" content="Fall Pie Sale 🍰">
-<meta name="twitter:description" content="Order delicious pies and support Saddle Brook MS/HS Music Association!">
-<meta name="twitter:image" content="https://opengraph.b-cdn.net/production/images/02d47ed4-326f-4cc9-9593-e0350d72d624.jpg?token=dBGWt2mlmItW_R3uYHx_IhfnDRKIpkmPBKoLm5f5ANk&height=675&width=1200&expires=33296498906">
-
-<!-- Meta Tags Generated via https://www.opengraph.xyz -->
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#030714">
+  <meta name="color-scheme" content="dark">
+  <title>Saddle Brook MS/HS Music Program | Coming Soon</title>
+  <meta name="description" content="Something extraordinary is coming. A new home for Saddle Brook MS/HS Marching Band, Color Guard, Concert Band, Choir, and Theater.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Saddle Brook MS/HS Music Program — Coming Soon">
+  <meta property="og:description" content="Something extraordinary is coming. Marching Band · Color Guard · Concert Band · Choir · Theater.">
+  <meta property="og:image" content="https://aamorell49-ui.github.io/pie-orders/assets/coming-soon.png">
+  <meta property="og:image:alt" content="Blue-and-gold Saddle Brook Music Program coming-soon artwork with a mysterious falcon and golden eyes.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23030714'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-size='42' fill='%23efc05d'%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preload" as="image" href="assets/coming-soon.png">
+  <style>
+    :root { color-scheme:dark; --ink:#030714; --gold:#efc05d; --light:#f5f3ec; --muted:#b8c3d6; }
+    * { box-sizing:border-box; }
+    html { background:var(--ink); }
+    body { margin:0; min-height:100vh; min-height:100svh; display:flex; flex-direction:column; color:var(--light); font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:radial-gradient(ellipse at 50% 38%,#101d38 0%,var(--ink) 72%); }
+    a { color:inherit; text-underline-offset:4px; }
+    a:focus-visible,button:focus-visible { outline:3px solid var(--gold); outline-offset:5px; }
+    .skip { position:fixed; left:16px; top:-120px; z-index:10; background:var(--gold); color:#030714; padding:12px 16px; border-radius:4px; }
+    .skip:focus { top:12px; }
+    header { width:100%; min-height:64px; padding:18px clamp(18px,3.5vw,56px); display:flex; align-items:center; justify-content:space-between; gap:18px; border-bottom:1px solid #ffffff12; }
+    .wordmark { font-size:12px; font-weight:650; text-transform:uppercase; letter-spacing:.24em; }
+    .wordmark span { color:var(--gold); }
+    .motion { appearance:none; border:1px solid #efc05d50; color:var(--muted); background:#030714bb; border-radius:999px; padding:9px 14px; font:inherit; font-size:11px; letter-spacing:.035em; min-height:36px; cursor:pointer; flex-shrink:0; }
+    .motion:hover { border-color:var(--gold); color:var(--light); }
+    [hidden] { display:none !important; }
+    main { width:100%; margin:auto; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px 0; }
+    .stage { position:relative; width:min(100%,calc((100svh - 132px)*1.776833)); margin:0; isolation:isolate; overflow:hidden; background:#02040a; }
+    .poster { width:100%; height:auto; display:block; aspect-ratio:1672/941; }
+    .haze { position:absolute; inset:0; overflow:hidden; pointer-events:none; opacity:.36; mask-image:linear-gradient(90deg,#000,transparent 26%,transparent 74%,#000); }
+    .haze::before,.haze::after { content:""; position:absolute; inset:-28%; background:radial-gradient(ellipse at 21% 46%,#9ab8ea40 0%,transparent 24%),radial-gradient(ellipse at 72% 62%,#9eb7e540 0%,transparent 21%),radial-gradient(ellipse at 38% 78%,#d7deef22 0%,transparent 18%); filter:blur(24px); will-change:transform; animation:drift 24s ease-in-out infinite alternate; animation-play-state:paused; }
+    .haze::after { animation-name:drift-back; animation-duration:31s; opacity:.7; }
+    .motion-enabled .haze::before,.motion-enabled .haze::after { animation-play-state:running; }
+    @keyframes drift { from { transform:translate3d(-5%,3%,0) scale(.96); } to { transform:translate3d(6%,-6%,0) scale(1.08); } }
+    @keyframes drift-back { from { transform:translate3d(8%,-4%,0) scale(1.08); } to { transform:translate3d(-6%,5%,0) scale(.97); } }
+    .details { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    footer { min-height:56px; padding:16px clamp(18px,3.5vw,56px); display:flex; align-items:center; justify-content:space-between; gap:14px; color:var(--muted); font-size:11px; line-height:1.6; letter-spacing:.035em; border-top:1px solid #ffffff10; }
+    footer a { color:var(--gold); }
+    @media (max-width:700px) and (orientation:portrait) {
+      header { min-height:68px; gap:12px; }
+      .wordmark { max-width:180px; font-size:10px; line-height:1.8; letter-spacing:.18em; }
+      .wordmark span { display:block; }
+      .motion { min-height:40px; font-size:10px; padding:9px 12px; }
+      main { margin:0 auto auto; padding:0 0 24px; }
+      .stage { width:100%; }
+      .details { position:static; width:auto; height:auto; margin:0; padding:32px 22px 12px; clip:auto; white-space:normal; overflow:visible; text-align:center; max-width:520px; }
+      .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.2em; font-size:11px; line-height:1.8; margin:0 0 12px; }
+      h1 { font-family:Georgia,"Times New Roman",serif; font-weight:400; font-size:clamp(46px,12vw,72px); line-height:1.05; text-transform:uppercase; margin:0 0 18px; }
+      h1 span { color:var(--gold); }
+      .tagline { color:var(--light); font-size:13px; line-height:1.8; text-transform:uppercase; letter-spacing:.16em; margin:0 auto 26px; max-width:320px; }
+      .programs { list-style:none; padding:22px 0 0; margin:0; border-top:1px solid #efc05d38; display:flex; flex-wrap:wrap; justify-content:center; gap:12px 20px; font-size:11px; line-height:1.7; color:var(--muted); letter-spacing:.045em; }
+      .programs li:last-child { color:var(--gold); }
+      footer { align-items:center; text-align:center; justify-content:center; flex-wrap:wrap; gap:7px 20px; padding:18px; }
+    }
+    @media (prefers-reduced-motion:reduce) { .haze::before,.haze::after { animation:none !important; will-change:auto; } }
+    @media print { header,footer,.haze { display:none; } body { display:block; background:#fff; } main { padding:0; } .stage { width:100%; } .details { display:none; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to coming-soon announcement</a>
+  <header>
+    <div class="wordmark">Saddle Brook <span>MS/HS Music Program</span></div>
+    <button class="motion" type="button" id="motion-toggle" aria-pressed="false" hidden>Pause motion</button>
+  </header>
+  <main id="main">
+    <figure class="stage">
+      <img class="poster" src="assets/coming-soon.png" width="1672" height="941" fetchpriority="high" decoding="async" alt="Cinematic blue-and-gold Saddle Brook Music Program artwork. A dark falcon with golden eyes rises above marching musicians in royal-blue uniforms and black plumes, color guard, concert band and piano, choir, theater performers, and two conductors.">
+      <div class="haze" aria-hidden="true"></div>
+    </figure>
+    <section class="details" aria-label="Coming-soon announcement">
+      <p class="eyebrow">Saddle Brook<br>MS/HS Music Program</p>
+      <h1>Coming <span>soon</span></h1>
+      <p class="tagline">Something extraordinary is coming.</p>
+      <ul class="programs" aria-label="Our programs">
+        <li>Marching Band</li><li>Color Guard</li><li>Concert Band</li><li>Choir</li><li>Theater</li>
+      </ul>
+    </section>
+  </main>
+  <footer><span>Saddle Brook, New Jersey</span><a href="assets/coming-soon.png">View full artwork</a></footer>
+  <script>
+    (() => {
+      const button = document.getElementById('motion-toggle');
+      const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let paused = preference.matches;
+      function sync() {
+        document.body.classList.toggle('motion-enabled', !paused && !preference.matches && !document.hidden);
+        button.hidden = preference.matches;
+        button.textContent = paused ? 'Resume motion' : 'Pause motion';
+        button.setAttribute('aria-pressed', String(paused));
+      }
+      button.addEventListener('click', () => { paused = !paused; sync(); });
+      preference.addEventListener('change', () => { paused = preference.matches; sync(); });
+      document.addEventListener('visibilitychange', sync);
+      sync();
+    })();
+  </script>
+</body>
 </html>

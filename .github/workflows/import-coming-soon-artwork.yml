@@ -1,0 +1,50 @@
+name: Import approved SBHS coming-soon artwork
+on:
+  push:
+    branches: [sbhs-coming-soon]
+permissions:
+  contents: write
+concurrency:
+  group: sbhs-artwork-import
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Copy verified artwork into the coming-soon branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPOSITORY: ${{ github.repository }}
+        shell: python
+        run: |
+          import base64, hashlib, json, os, urllib.request, urllib.error
+          branch = 'sbhs-coming-soon'
+          path = 'assets/coming-soon.png'
+          expected = '2dd5eaa4dc5ad63dc5688f8f3fa3ccc47fcab3b1b0efad36d658ebf6ee845958'
+          endpoint = 'https://api.github.com/repos/' + os.environ['GH_REPOSITORY'] + '/contents/' + path
+          headers = {'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'}
+          previous = None
+          try:
+              with urllib.request.urlopen(urllib.request.Request(endpoint + '?ref=' + branch, headers=headers), timeout=30) as response:
+                  previous = json.load(response)
+          except urllib.error.HTTPError as error:
+              if error.code != 404:
+                  raise
+          if previous:
+              print('Artwork already stored in this branch; no changes needed.')
+          else:
+              # No GitHub authentication header is sent to the artwork storage host.
+              request = urllib.request.Request('https://at.adobe.com/eaczYTdPSUeDK7eN', headers={'User-Agent': 'SBHS-Artwork-Import/1.0'})
+              with urllib.request.urlopen(request, timeout=60) as response:
+                  image = response.read(10_000_001)
+              if len(image) > 10_000_000 or not image.startswith(b'\x89PNG\r\n\x1a\n'):
+                  raise RuntimeError('Source is not the expected PNG image.')
+              if hashlib.sha256(image).hexdigest() != expected:
+                  raise RuntimeError('Artwork checksum mismatch; refusing to publish different bytes.')
+              body = {'message': 'Store approved SBHS coming-soon artwork locally', 'content': base64.b64encode(image).decode('ascii'), 'branch': branch}
+              write_headers = dict(headers, **{'Content-Type': 'application/json'})
+              request = urllib.request.Request(endpoint, data=json.dumps(body).encode(), headers=write_headers, method='PUT')
+              with urllib.request.urlopen(request, timeout=60) as response:
+                  result = json.load(response)
+              print('Artwork stored:', result['content']['html_url'])
