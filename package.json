@@ -1,19 +1,10 @@
 {
-  "name": "pie-orders",
+  "name": "sbhs-music-coming-soon",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.1",
   "type": "module",
+  "description": "Saddle Brook MS/HS Music Program coming-soon website",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.0",
-    "vite": "^5.0.0"
+    "build": "node scripts/build.mjs"
   }
 }
