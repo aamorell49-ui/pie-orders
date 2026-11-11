@@ -10,11 +10,35 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Saddle Brook MS/HS Music Program — Coming Soon">
   <meta property="og:description" content="Something extraordinary is coming. Marching Band · Color Guard · Concert Band · Choir · Theater.">
-  <meta property="og:image" content="https://aamorell49-ui.github.io/pie-orders/assets/coming-soon.png">
+  <meta property="og:image" content="https://sbmshs-music.vercel.app/assets/coming-soon.png">
   <meta property="og:image:alt" content="Blue-and-gold Saddle Brook Music Program coming-soon artwork with a mysterious falcon and golden eyes.">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23030714'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-size='42' fill='%23efc05d'%3ES%3C/text%3E%3C/svg%3E">
   <link rel="preload" as="image" href="assets/coming-soon.png">
+  <script>
+    // Fail open: this decorative intro must never make the actual site inaccessible.
+    (() => {
+      try {
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const saveData = navigator.connection && navigator.connection.saveData;
+        const forced = new URLSearchParams(location.search).get('intro') === '1';
+        let seen = false;
+        try { seen = sessionStorage.getItem('sbmshs-intro-v1') === 'seen'; } catch (_) {}
+        if (!reduced && !saveData && (forced || !seen)) {
+          document.documentElement.classList.add('intro-pending');
+          window.sbmshsIntroWatchdog = setTimeout(() => {
+            document.documentElement.classList.remove('intro-pending', 'intro-playing');
+            const layer = document.getElementById('cinematic-intro');
+            const site = document.getElementById('site-shell');
+            if (layer) layer.hidden = true;
+            if (site) { site.inert = false; site.removeAttribute('aria-hidden'); }
+          }, 9500);
+        }
+      } catch (_) { /* The static page remains the default. */ }
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/intro-v1.css">
+  <script src="assets/intro-v1.js" defer></script>
   <style>
     :root { color-scheme:dark; --ink:#030714; --gold:#efc05d; --light:#f5f3ec; --muted:#b8c3d6; }
     * { box-sizing:border-box; }
@@ -63,12 +87,48 @@
   </style>
 </head>
 <body>
+  <div id="cinematic-intro" class="cinematic-intro" role="dialog" aria-modal="true" aria-labelledby="intro-title" hidden>
+    <h2 id="intro-title" class="sr-only">Saddle Brook Music: animated falcon introduction</h2>
+    <canvas id="smoke-canvas" aria-hidden="true"></canvas>
+    <div class="smoke-fallback" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="intro-vignette" aria-hidden="true"></div>
+    <div class="intro-brand" aria-hidden="true">Saddle Brook <span>MS/HS Music Program</span></div>
+    <button type="button" id="skip-intro" class="intro-skip">Skip intro <span aria-hidden="true">↗</span></button>
+    <div class="falcon-flight" id="falcon-flight" aria-hidden="true">
+      <svg viewBox="-500 -250 1000 520" xmlns="http://www.w3.org/2000/svg" focusable="false">
+        <defs>
+          <linearGradient id="falcon-shade" x1="0" y1="0" x2="0.35" y2="1"><stop stop-color="#101a28"/><stop offset=".55" stop-color="#04080e"/><stop offset="1" stop-color="#010206"/></linearGradient>
+          <linearGradient id="falcon-rim" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#9eb6d2" stop-opacity=".55"/><stop offset=".65" stop-color="#15263d" stop-opacity=".12"/></linearGradient>
+          <radialGradient id="eye-halo"><stop stop-color="#ffd46e" stop-opacity=".8"/><stop offset="1" stop-color="#d79829" stop-opacity="0"/></radialGradient>
+          <path id="falcon-wing" d="M-24 18 C-68-3-107-43-154-72 C-198-101-257-117-310-139 C-365-163-407-193-464-216 C-430-170-399-133-359-99 L-423-139 C-397-96-354-66-316-43 L-370-63 C-337-28-295-11-257 1 L-298-6 C-261 22-220 32-181 34 L-205 41 C-164 55-126 53-95 46 C-60 51-37 47-24 35 Z"/>
+        </defs>
+        <g fill="url(#falcon-shade)" stroke="url(#falcon-rim)" stroke-width="1.4" stroke-linejoin="round">
+          <g id="wing-left"><use href="#falcon-wing"/><path d="M-53 25 Q-165-39-310-139 M-80 32 Q-187-4-359-99 M-95 42 Q-187 20-316-43" fill="none" stroke="#7b94b2" stroke-opacity=".13"/></g>
+          <g id="wing-right"><g transform="scale(-1 1)"><use href="#falcon-wing"/><path d="M-53 25 Q-165-39-310-139 M-80 32 Q-187-4-359-99 M-95 42 Q-187 20-316-43" fill="none" stroke="#7b94b2" stroke-opacity=".13"/></g></g>
+          <path d="M-19 69 L-41 163 Q-21 171-1 165 Q20 171 41 163 L19 69 Z"/>
+          <path d="M-25-16 Q-46 9-38 41 Q-32 79-15 103 L0 116 L15 103 Q32 79 38 41 Q46 9 25-16 Z"/>
+          <path d="M-30-7 Q-38-40-16-49 Q0-56 16-49 Q38-40 30-7 L21 17 L12 11 L0 28 L-12 11 L-21 17 Z"/>
+          <path d="M-7-3 L0-8 L8-2 L5 19 L0 26 L-4 14 Z" fill="#0c121a"/>
+        </g>
+        <g id="falcon-eyes">
+          <ellipse cx="-15" cy="-13" rx="20" ry="15" fill="url(#eye-halo)"/>
+          <ellipse cx="15" cy="-13" rx="20" ry="15" fill="url(#eye-halo)"/>
+          <path d="M-26-19 Q-17-17-7-13 Q-15-6-23-11 Z M26-19 Q17-17 7-13 Q15-6 23-11 Z" fill="#efba48"/>
+          <path d="M-20-16 L-13-13 L-20-12 Z M20-16 L13-13 L20-12 Z" fill="#ffe5a0"/>
+        </g>
+      </svg>
+    </div>
+    <div class="intro-caption" aria-hidden="true"><span>Something extraordinary</span><strong>is coming.</strong></div>
+    <div class="intro-progress" aria-hidden="true"><i id="intro-progress-bar"></i></div>
+    <div class="intro-impact" id="intro-impact" aria-hidden="true"></div>
+  </div>
+  <div id="site-shell" class="site-shell">
   <a class="skip" href="#main">Skip to coming-soon announcement</a>
   <header>
     <div class="wordmark">Saddle Brook <span>MS/HS Music Program</span></div>
     <button class="motion" type="button" id="motion-toggle" aria-pressed="false" hidden>Pause motion</button>
   </header>
-  <main id="main">
+  <main id="main" tabindex="-1">
     <figure class="stage">
       <img class="poster" src="assets/coming-soon.png" width="1672" height="941" fetchpriority="high" decoding="async" alt="Cinematic blue-and-gold Saddle Brook Music Program artwork. A dark falcon with golden eyes rises above marching musicians in royal-blue uniforms and black plumes, color guard, concert band and piano, choir, theater performers, and two conductors.">
       <div class="haze" aria-hidden="true"></div>
@@ -82,7 +142,8 @@
       </ul>
     </section>
   </main>
-  <footer><span>Saddle Brook, New Jersey</span><a href="assets/coming-soon.png">View full artwork</a></footer>
+  <footer><span>Saddle Brook, New Jersey</span><div class="footer-actions"><button type="button" id="replay-intro" class="replay-intro" hidden><span aria-hidden="true">↻</span> Replay intro</button><a href="assets/coming-soon.png">View full artwork</a></div></footer>
+  </div>
   <script>
     (() => {
       const button = document.getElementById('motion-toggle');
